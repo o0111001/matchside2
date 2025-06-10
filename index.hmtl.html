@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchside - Elite Recruiting & KI-Matching</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background-color: #ffffff;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header & Navigation - Premium Style */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(45, 55, 72, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a202c;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 20px rgba(26, 32, 44, 0.15);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #2d3748;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links a:hover {
+            color: #3182ce;
+        }
+
+        .nav-cta {
+            background: #1a202c;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-cta:hover {
+            background: #2d3748;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(26, 32, 44, 0.2);
+        }
+
+        /* Hero Section - Ultra Premium */
+        .hero {
+            background: #ffffff;
+            padding: 12rem 0 8rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(49, 130, 206, 0.1);
+            color: #3182ce;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: #1a202c;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .hero .subtitle {
+            font-size: 1.4rem;
+            color: #2d3748;
+            margin-bottom: 3.5rem;
+            font-weight: 400;
+            line-height: 1.5;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .btn-primary {
+            background: #1a202c;
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #1a202c;
+            padding: 1.2rem 2.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #2d3748;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(26, 32, 44, 0.2);
+        }
+
+        .btn-secondary:hover {
+            border-color: #3182ce;
+            color: #3182ce;
+            transform: translateY(-2px);
+        }
+
+        /* Trust Stats */
+        .trust-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Services Section - Elite Design */
+        .services {
+            padding: 8rem 0;
+            background: #f7fafc;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1a202c;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s;
+            position: relative;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border-color: rgba(49, 130, 206, 0.2);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .service-badge {
+            background: rgba(49, 130, 206, 0.1);
+            color: #3182ce;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1a202c;
+            letter-spacing: -0.01em;
+        }
+
+        .service-card .description {
+            color: #718096;
+            margin-bottom: 2.5rem;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .service-features li {
+            padding: 0.8rem 0;
+            color: #2d3748;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            color: #3182ce;
+            font-weight: bold;
+            width: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Elite Target Groups */
+        .target-groups {
+            padding: 8rem 0;
+            background: white;
+        }
+
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .group-card {
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .group-card:hover {
+            border-color: #3182ce;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(49, 130, 206, 0.1);
+        }
+
+        .group-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: all 0.3s;
+        }
+
+        .group-card:hover .group-icon {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%);
+            border-color: #3182ce;
+            color: white;
+        }
+
+        .group-card h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+
+        .group-card p {
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        /* Technology Section */
+        .technology {
+            padding: 8rem 0;
+            background: #1a202c;
+            color: white;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .tech-item {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(49, 130, 206, 0.3);
+        }
+
+        .tech-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #3182ce;
+            font-weight: 600;
+        }
+
+        .tech-item p {
+            color: #a0aec0;
+            font-size: 0.95rem;
+        }
+
+        /* Premium Footer */
+        footer {
+            background: #1a202c;
+            color: white;
+            padding: 6rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: #a0aec0;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+            color: #3182ce;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .footer-section a {
+            color: #a0aec0;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .footer-section a:hover {
+            color: #3182ce;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid #2d3748;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-ctas {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon">M</div>
+                Matchside
+            </a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#technology">Technologie</a></li>
+                <li><a href="#about">Über uns</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <a href="#" class="nav-cta">Beratung starten</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">🇨🇭 Swiss Premium Recruiting</div>
+                <h1>Elite Matching für Premium Careers</h1>
+                <p class="subtitle">KI-gestütztes CV-Matching kombiniert mit exklusiver, persönlicher Beratung. Schweizer Präzision für außergewöhnliche Karrieren und Top-Talente.</p>
+                <div class="hero-ctas">
+                    <a href="#" class="btn-primary">KI-Matching erleben</a>
+                    <a href="#" class="btn-secondary">Premium Beratung</a>
+                </div>
+                
+                <div class="trust-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">100K</div>
+                        <div class="stat-label">Investment CHF</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">80%+</div>
+                        <div class="stat-label">Match Genauigkeit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">DSGVO</div>
+                        <div class="stat-label">Konform</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2025</div>
+                        <div class="stat-label">Innovation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Premium Services</h2>
+                <p>Duale Elite-Strategie: Revolutionäre KI-Technologie für die Zukunft, exzellente persönliche Beratung für sofortige Erfolge.</p>
+            </div>
+            
+            <div class="services-container">
+                <!-- KI-Matching Service -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon">🤖</div>
+                        <div class="service-badge">Beta Launch</div>
+                    </div>
+                    <h3>KI-Matching Platform</h3>
+                    <p class="description">Revolutionäre CV-Analyse mit transparenten Scoring-Algorithmen. Automatisierte Suche in allen Schweizer Stellenportalen mit 80%+ Matching-Genauigkeit.</p>
+                    <ul class="service-features">
+                        <li>NLP-basierte CV-Analyse (spaCy, BERT)</li>
+                        <li>Automatisches Matching aller CH-Jobportale</li>
+                        <li>Freemium: 2 kostenlose Premium-Matches täglich</li>
+                        <li>Analytics, Coaching & Gehaltsbenchmarks</li>
+                        <li>Transparente Scoring-Kriterien</li>
+                        <li>API-Integration für Unternehmen</li>
+                        <li>White-Label-Lösungen verfügbar</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Beta-Zugang anfordern</a>
+                </div>
+
+                <!-- Premium Consulting -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon">👥</div>
+                        <div class="service-badge">Sofort verfügbar</div>
+                    </div>
+                    <h3>Premium Consulting</h3>
+                    <p class="description">Exklusive Recruiting-Beratung von Experten. Persönliche Betreuung für Premium-Karrieren und strategisches Talent-Matching für anspruchsvolle Unternehmen.</p>
+                    <ul class="service-features">
+                        <li>Branchenspezialisierung (Tech, Finance, Pharma)</li>
+                        <li>C-Level & Senior-Positionen</li>
+                        <li>Young Professionals Programme</li>
+                        <li>Quereinsteiger-Strategien</li>
+                        <li>KMU-Komplettlösungen</li>
+                        <li>Enterprise-Skalierung</li>
+                        <li>Diskrete Headhunting-Services</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Beratung buchen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Groups -->
+    <section class="target-groups">
+        <div class="container">
+            <div class="section-header">
+                <h2>Unsere Elite-Zielgruppen</h2>
+                <p>Spezialisierte Lösungen für anspruchsvolle Karrieren und Premium-Recruiting</p>
+            </div>
+            <div class="groups-grid">
+                <div class="group-card">
+                    <div class="group-icon">🎓</div>
+                    <h4>Young Professionals</h4>
+                    <p>Elite-Karrierestart für Hochschulabsolventen mit klarer Orientierung</p>
+                </div>
+                <div class="group-card">
+                    <div class="group-icon">💼</div>
+                    <h4>Senior Executives</h4>
+                    <p>C-Level und Führungspositionen mit strategischem Karriere-Matching</p>
+                </div>
+                <div class="group-card">
+                    <div class="group-icon">🔄</div>
+                    <h4>Career Changers</h4>
+                    <p>Professionelle Quereinsteiger-Beratung mit Transferkompetenz-Analyse</p>
+                </div>
+                <div class="group-card">
+                    <div class="group-icon">🏢</div>
+                    <h4>Enterprise Clients</h4>
+                    <p>Skalierbare HR-Lösungen für KMU bis Großkonzerne</p>
+                </div>
+                <div class="group-card">
+                    <div class="group-icon">🎯</div>
+                    <h4>HR-Partners</h4>
+                    <p>White-Label und API-Lösungen für Recruiting-Agenturen</p>
+                </div>
+                <div class="group-card">
+                    <div class="group-icon">🏫</div>
+                    <h4>Universities</h4>
+                    <p>Career-Services und Premium-Absolventenprogramme</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="technology" id="technology">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: white;">Premium Technologie-Stack</h2>
+                <p style="color: #a0aec0;">Schweizer Präzision trifft modernste KI-Algorithmen und Enterprise-Grade-Sicherheit</p>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h4>Backend</h4>
+                    <p>Python, Django, REST APIs</p>
+                </div>
+                <div class="tech-item">
+                    <h4>AI/ML</h4>
+                    <p>spaCy, BERT, NLP-Processing</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Frontend</h4>
+                    <p>React, Premium UI/UX</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Infrastructure</h4>
+                    <p>AWS/Azure Cloud-Native</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Security</h4>
+                    <p>DSGVO, Swiss Data Protection</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Integration</h4>
+                    <p>APIs, White-Label-Solutions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h4>Matchside</h4>
+                    <p>Elite Matching für Premium Careers. Schweizer Qualität, KI-Innovation und persönliche Exzellenz für außergewöhnliche Karrieren.</p>
+                    <p><strong>Investment:</strong> 100.000 CHF<br>
+                    <strong>Break-even:</strong> 2 Jahre geplant</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <a href="#">KI-Matching Platform</a>
+                    <a href="#">Premium Consulting</a>
+                    <a href="#">Enterprise Solutions</a>
+                    <a href="#">White-Label APIs</a>
+                    <a href="#">Headhunting</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#">Über uns</a>
+                    <a href="#">Team</a>
+                    <a href="#">Investoren</a>
+                    <a href="#">Karriere</a>
+                    <a href="#">Presse</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Kontakt</h4>
+                    <a href="#">hello@matchside.ch</a>
+                    <a href="#">+41 44 XXX XX XX</a>
+                    <a href="#">Zürich, Schweiz</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Matchside AG. Alle Rechte vorbehalten. | <a href="#" style="color: #3182ce;">Datenschutz</a> | <a href="#" style="color: #3182ce;">Impressum</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
