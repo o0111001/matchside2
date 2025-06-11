@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matchside - Elite Recruiting & KI-Matching</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         * {
             margin: 0;
@@ -19,6 +19,25 @@
             color: #1a202c;
             background-color: #ffffff;
             font-weight: 400;
+            overflow-x: hidden;
+        }
+
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f7fafc;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3182ce;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4299e1;
         }
 
         .container {
@@ -27,16 +46,71 @@
             padding: 0 2rem;
         }
 
-        /* Header & Navigation - Premium Style */
+        /* Floating Background Elements */
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            background: #3182ce;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 150px;
+            height: 150px;
+            background: #f59e0b;
+            top: 70%;
+            right: 15%;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            background: #10b981;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(-15px) rotate(240deg); }
+        }
+
+        /* Modern Header */
         header {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(45, 55, 72, 0.1);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
-            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
         nav {
@@ -51,24 +125,87 @@
             align-items: center;
             gap: 0.75rem;
             font-size: 1.8rem;
-            font-weight: 700;
-            color: #1a202c;
+            font-weight: 900;
             text-decoration: none;
             letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, #3182ce 0%, #f59e0b 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            font-weight: 900;
+        }
+
+        .logo:hover .logo-text {
+            background: linear-gradient(135deg, #4299e1 0%, #fbbf24 50%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
         }
 
         .logo-icon {
             width: 45px;
             height: 45px;
-            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
-            border-radius: 12px;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 20px rgba(26, 32, 44, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(360deg);
+        }
+
+        .logo-icon::before,
+        .logo-icon::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            position: absolute;
+            border: 2px solid #1a202c;
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon::before {
+            left: 6px;
+            background: #3182ce;
+            z-index: 1;
+        }
+
+        .logo-icon::after {
+            right: 6px;
+            background: #f59e0b;
+            z-index: 1;
+        }
+
+        .logo-icon .connector {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            border: 1px solid #1a202c;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover .connector {
+            transform: translate(-50%, -50%) scale(1.3);
+            box-shadow: 0 0 20px #10b981;
         }
 
         .nav-links {
@@ -83,75 +220,139 @@
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
             letter-spacing: 0.01em;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3182ce;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
             color: #3182ce;
+            transform: translateY(-2px);
         }
 
         .nav-cta {
-            background: #1a202c;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
             color: white;
             padding: 0.8rem 1.8rem;
-            border-radius: 8px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             letter-spacing: 0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-cta:hover::before {
+            left: 100%;
         }
 
         .nav-cta:hover {
-            background: #2d3748;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 25px rgba(26, 32, 44, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(26, 32, 44, 0.3);
         }
 
-        /* Hero Section - Ultra Premium */
+        /* Hero Section */
         .hero {
-            background: #ffffff;
+            background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
             padding: 12rem 0 8rem;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(49, 130, 206, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            z-index: 0;
         }
 
         .hero-content {
             max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-badge {
             display: inline-block;
             background: rgba(49, 130, 206, 0.1);
             color: #3182ce;
-            padding: 0.5rem 1.2rem;
+            padding: 0.6rem 1.5rem;
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 2rem;
             letter-spacing: 0.02em;
+            border: 1px solid rgba(49, 130, 206, 0.2);
+            transition: all 0.3s ease;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .hero-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(49, 130, 206, 0.2);
         }
 
         .hero h1 {
             font-size: 4.5rem;
-            font-weight: 800;
+            font-weight: 900;
             margin-bottom: 2rem;
             color: #1a202c;
             line-height: 1.1;
             letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #1a202c 0%, #3182ce 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInUp 0.6s ease-out 0.2s both;
         }
 
         .hero .subtitle {
             font-size: 1.4rem;
-            color: #2d3748;
+            color: #718096;
             margin-bottom: 3.5rem;
             font-weight: 400;
-            line-height: 1.5;
+            line-height: 1.6;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            animation: slideInUp 0.6s ease-out 0.4s both;
         }
 
         .hero-ctas {
@@ -160,66 +361,103 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-bottom: 4rem;
+            animation: slideInUp 0.6s ease-out 0.6s both;
         }
 
         .btn-primary {
-            background: #1a202c;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
             color: white;
-            padding: 1.2rem 2.5rem;
-            border-radius: 10px;
+            padding: 1.3rem 2.8rem;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             letter-spacing: 0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
         }
 
         .btn-secondary {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
             color: #1a202c;
-            padding: 1.2rem 2.5rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
+            padding: 1.3rem 2.8rem;
+            border: 2px solid rgba(226, 232, 240, 0.8);
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
         .btn-primary:hover {
-            background: #2d3748;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(26, 32, 44, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(26, 32, 44, 0.3);
         }
 
         .btn-secondary:hover {
             border-color: #3182ce;
             color: #3182ce;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(49, 130, 206, 0.2);
         }
 
         /* Trust Stats */
         .trust-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
             margin-top: 4rem;
             padding-top: 4rem;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #edf2f7;
+            flex-wrap: wrap;
+            animation: slideInUp 0.6s ease-out 0.8s both;
         }
 
         .stat-item {
             text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
         }
 
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-size: 2.8rem;
+            font-weight: 900;
             color: #1a202c;
             margin-bottom: 0.5rem;
             letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1a202c 0%, #3182ce 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover .stat-number {
+            transform: scale(1.1);
         }
 
         .stat-label {
@@ -230,10 +468,11 @@
             letter-spacing: 0.05em;
         }
 
-        /* Services Section - Elite Design */
+        /* Services Section */
         .services {
             padding: 8rem 0;
             background: #f7fafc;
+            position: relative;
         }
 
         .section-header {
@@ -245,11 +484,15 @@
         }
 
         .section-header h2 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3.2rem;
+            font-weight: 800;
             margin-bottom: 1.5rem;
             color: #1a202c;
             letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1a202c 0%, #3182ce 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .section-header p {
@@ -259,26 +502,44 @@
         }
 
         .services-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 4rem;
+            display: flex;
+            justify-content: center;
             margin-top: 4rem;
         }
 
         .service-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
             padding: 4rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s;
+            border-radius: 24px;
+            box-shadow: 0 8px 60px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
             position: relative;
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3182ce 0%, #f59e0b 50%, #10b981 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
         }
 
         .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            border-color: rgba(49, 130, 206, 0.2);
+            transform: translateY(-12px);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            border-color: rgba(49, 130, 206, 0.3);
         }
 
         .service-header {
@@ -292,28 +553,41 @@
             width: 70px;
             height: 70px;
             background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
-            border-radius: 16px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 1.8rem;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #3182ce 0%, #4299e1 100%);
         }
 
         .service-badge {
-            background: rgba(49, 130, 206, 0.1);
+            background: linear-gradient(135deg, rgba(49, 130, 206, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
             color: #3182ce;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            border: 1px solid rgba(49, 130, 206, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         .service-card h3 {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
             color: #1a202c;
@@ -333,28 +607,39 @@
         }
 
         .service-features li {
-            padding: 0.8rem 0;
+            padding: 0.9rem 0;
             color: #2d3748;
             display: flex;
             align-items: flex-start;
             gap: 0.8rem;
             font-size: 0.95rem;
             line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .service-features li:hover {
+            transform: translateX(5px);
+            color: #3182ce;
         }
 
         .service-features li::before {
             content: '✓';
-            color: #3182ce;
+            color: #10b981;
             font-weight: bold;
             width: 16px;
             flex-shrink: 0;
             margin-top: 2px;
+            transition: all 0.3s ease;
         }
 
-        /* Elite Target Groups */
+        .service-features li:hover::before {
+            transform: scale(1.2);
+        }
+
+        /* Target Groups */
         .target-groups {
             padding: 8rem 0;
-            background: white;
+            background: #ffffff;
         }
 
         .groups-grid {
@@ -366,38 +651,57 @@
 
         .group-card {
             padding: 3rem 2.5rem;
-            border-radius: 16px;
-            background: white;
-            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #edf2f7;
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.4s ease;
             position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .group-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(49, 130, 206, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .group-card:hover::before {
+            left: 100%;
         }
 
         .group-card:hover {
             border-color: #3182ce;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(49, 130, 206, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(49, 130, 206, 0.15);
         }
 
         .group-icon {
             width: 80px;
             height: 80px;
             background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            border: 2px solid #e2e8f0;
+            border: 2px solid #edf2f7;
             border-radius: 20px;
             margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            transition: all 0.3s;
+            transition: all 0.4s ease;
         }
 
         .group-card:hover .group-icon {
-            background: linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%);
+            background: linear-gradient(135deg, #3182ce 0%, #4299e1 100%);
             border-color: #3182ce;
             color: white;
+            transform: rotateY(360deg) scale(1.1);
+            box-shadow: 0 10px 30px rgba(49, 130, 206, 0.3);
         }
 
         .group-card h4 {
@@ -405,6 +709,11 @@
             font-weight: 600;
             margin-bottom: 1rem;
             color: #1a202c;
+            transition: all 0.3s ease;
+        }
+
+        .group-card:hover h4 {
+            color: #3182ce;
         }
 
         .group-card p {
@@ -412,50 +721,26 @@
             line-height: 1.5;
         }
 
-        /* Technology Section */
-        .technology {
-            padding: 8rem 0;
-            background: #1a202c;
-            color: white;
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-
-        .tech-item {
-            text-align: center;
-            padding: 2.5rem 1.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-        }
-
-        .tech-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(49, 130, 206, 0.3);
-        }
-
-        .tech-item h4 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: #3182ce;
-            font-weight: 600;
-        }
-
-        .tech-item p {
-            color: #a0aec0;
-            font-size: 0.95rem;
-        }
-
-        /* Premium Footer */
+        /* Footer */
         footer {
-            background: #1a202c;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
             color: white;
             padding: 6rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(49, 130, 206, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+            z-index: 0;
         }
 
         .footer-content {
@@ -463,6 +748,8 @@
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 4rem;
             margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-brand h4 {
@@ -473,37 +760,52 @@
         }
 
         .footer-brand p {
-            color: #a0aec0;
+            color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             margin-bottom: 2rem;
         }
 
         .footer-section h4 {
             margin-bottom: 1.5rem;
-            color: #3182ce;
+            color: #4299e1;
             font-weight: 600;
             font-size: 1rem;
         }
 
         .footer-section a {
-            color: #a0aec0;
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             display: block;
             margin-bottom: 0.8rem;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
             font-size: 0.95rem;
         }
 
         .footer-section a:hover {
-            color: #3182ce;
+            color: #4299e1;
+            transform: translateX(5px);
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 3rem;
-            border-top: 1px solid #2d3748;
-            color: #718096;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                transform: translateY(60px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         /* Responsive Design */
@@ -533,20 +835,39 @@
             .container {
                 padding: 0 1rem;
             }
+
+            .trust-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Background -->
+    <div class="floating-bg">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
     <!-- Header -->
-    <header>
+    <header id="header">
         <nav class="container">
             <a href="#" class="logo">
-                <div class="logo-icon">M</div>
-                Matchside
+                <div class="logo-icon">
+                    <div class="circle-left"></div>
+                    <div class="circle-right"></div>
+                    <div class="overlap-indicator"></div>
+                </div>
+                <span class="logo-text">Matchside</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#services">Services</a></li>
-                <li><a href="#technology">Technologie</a></li>
                 <li><a href="#about">Über uns</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
@@ -558,12 +879,12 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <div class="hero-badge">🇨🇭 Swiss Premium Recruiting</div>
-                <h1>Elite Matching für Premium Careers</h1>
-                <p class="subtitle">KI-gestütztes CV-Matching kombiniert mit exklusiver, persönlicher Beratung. Schweizer Präzision für außergewöhnliche Karrieren und Top-Talente.</p>
+                <div class="hero-badge">🇨🇭 Elite Recruiting</div>
+                <h1>Intelligentes Matching für aussergewöhnliche Karrieren</h1>
+                <p class="subtitle">KI-gestütztes CV-Matching kombiniert mit exklusiver, persönlicher Beratung. Schweizer Präzision für Top-Talente und anspruchsvolle Unternehmen.</p>
                 <div class="hero-ctas">
                     <a href="#" class="btn-primary">KI-Matching erleben</a>
-                    <a href="#" class="btn-secondary">Premium Beratung</a>
+                    <a href="#" class="btn-secondary">Exklusive Beratung</a>
                 </div>
                 
                 <div class="trust-stats">
@@ -574,10 +895,6 @@
                     <div class="stat-item">
                         <div class="stat-number">80%+</div>
                         <div class="stat-label">Match Genauigkeit</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">DSGVO</div>
-                        <div class="stat-label">Konform</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">2025</div>
@@ -592,12 +909,11 @@
     <section class="services" id="services">
         <div class="container">
             <div class="section-header">
-                <h2>Premium Services</h2>
-                <p>Duale Elite-Strategie: Revolutionäre KI-Technologie für die Zukunft, exzellente persönliche Beratung für sofortige Erfolge.</p>
+                <h2>Unser Service</h2>
+                <p>Revolutionäre KI-Technologie für die Zukunft, kombiniert mit Schweizer Präzision und Innovation.</p>
             </div>
             
             <div class="services-container">
-                <!-- KI-Matching Service -->
                 <div class="service-card">
                     <div class="service-header">
                         <div class="service-icon">🤖</div>
@@ -606,35 +922,13 @@
                     <h3>KI-Matching Platform</h3>
                     <p class="description">Revolutionäre CV-Analyse mit transparenten Scoring-Algorithmen. Automatisierte Suche in allen Schweizer Stellenportalen mit 80%+ Matching-Genauigkeit.</p>
                     <ul class="service-features">
-                        <li>NLP-basierte CV-Analyse (spaCy, BERT)</li>
+                        <li>Präzises AI-Matching trifft persönliche Vermittlung</li>
                         <li>Automatisches Matching aller CH-Jobportale</li>
-                        <li>Freemium: 2 kostenlose Premium-Matches täglich</li>
+                        <li>Freemium: 2 kostenlose Matches täglich</li>
                         <li>Analytics, Coaching & Gehaltsbenchmarks</li>
                         <li>Transparente Scoring-Kriterien</li>
-                        <li>API-Integration für Unternehmen</li>
-                        <li>White-Label-Lösungen verfügbar</li>
                     </ul>
                     <a href="#" class="btn-primary">Beta-Zugang anfordern</a>
-                </div>
-
-                <!-- Premium Consulting -->
-                <div class="service-card">
-                    <div class="service-header">
-                        <div class="service-icon">👥</div>
-                        <div class="service-badge">Sofort verfügbar</div>
-                    </div>
-                    <h3>Premium Consulting</h3>
-                    <p class="description">Exklusive Recruiting-Beratung von Experten. Persönliche Betreuung für Premium-Karrieren und strategisches Talent-Matching für anspruchsvolle Unternehmen.</p>
-                    <ul class="service-features">
-                        <li>Branchenspezialisierung (Tech, Finance, Pharma)</li>
-                        <li>C-Level & Senior-Positionen</li>
-                        <li>Young Professionals Programme</li>
-                        <li>Quereinsteiger-Strategien</li>
-                        <li>KMU-Komplettlösungen</li>
-                        <li>Enterprise-Skalierung</li>
-                        <li>Diskrete Headhunting-Services</li>
-                    </ul>
-                    <a href="#" class="btn-primary">Beratung buchen</a>
                 </div>
             </div>
         </div>
@@ -644,118 +938,5 @@
     <section class="target-groups">
         <div class="container">
             <div class="section-header">
-                <h2>Unsere Elite-Zielgruppen</h2>
-                <p>Spezialisierte Lösungen für anspruchsvolle Karrieren und Premium-Recruiting</p>
-            </div>
-            <div class="groups-grid">
-                <div class="group-card">
-                    <div class="group-icon">🎓</div>
-                    <h4>Young Professionals</h4>
-                    <p>Elite-Karrierestart für Hochschulabsolventen mit klarer Orientierung</p>
-                </div>
-                <div class="group-card">
-                    <div class="group-icon">💼</div>
-                    <h4>Senior Executives</h4>
-                    <p>C-Level und Führungspositionen mit strategischem Karriere-Matching</p>
-                </div>
-                <div class="group-card">
-                    <div class="group-icon">🔄</div>
-                    <h4>Career Changers</h4>
-                    <p>Professionelle Quereinsteiger-Beratung mit Transferkompetenz-Analyse</p>
-                </div>
-                <div class="group-card">
-                    <div class="group-icon">🏢</div>
-                    <h4>Enterprise Clients</h4>
-                    <p>Skalierbare HR-Lösungen für KMU bis Großkonzerne</p>
-                </div>
-                <div class="group-card">
-                    <div class="group-icon">🎯</div>
-                    <h4>HR-Partners</h4>
-                    <p>White-Label und API-Lösungen für Recruiting-Agenturen</p>
-                </div>
-                <div class="group-card">
-                    <div class="group-icon">🏫</div>
-                    <h4>Universities</h4>
-                    <p>Career-Services und Premium-Absolventenprogramme</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technology Section -->
-    <section class="technology" id="technology">
-        <div class="container">
-            <div class="section-header">
-                <h2 style="color: white;">Premium Technologie-Stack</h2>
-                <p style="color: #a0aec0;">Schweizer Präzision trifft modernste KI-Algorithmen und Enterprise-Grade-Sicherheit</p>
-            </div>
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <h4>Backend</h4>
-                    <p>Python, Django, REST APIs</p>
-                </div>
-                <div class="tech-item">
-                    <h4>AI/ML</h4>
-                    <p>spaCy, BERT, NLP-Processing</p>
-                </div>
-                <div class="tech-item">
-                    <h4>Frontend</h4>
-                    <p>React, Premium UI/UX</p>
-                </div>
-                <div class="tech-item">
-                    <h4>Infrastructure</h4>
-                    <p>AWS/Azure Cloud-Native</p>
-                </div>
-                <div class="tech-item">
-                    <h4>Security</h4>
-                    <p>DSGVO, Swiss Data Protection</p>
-                </div>
-                <div class="tech-item">
-                    <h4>Integration</h4>
-                    <p>APIs, White-Label-Solutions</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h4>Matchside</h4>
-                    <p>Elite Matching für Premium Careers. Schweizer Qualität, KI-Innovation und persönliche Exzellenz für außergewöhnliche Karrieren.</p>
-                    <p><strong>Investment:</strong> 100.000 CHF<br>
-                    <strong>Break-even:</strong> 2 Jahre geplant</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <a href="#">KI-Matching Platform</a>
-                    <a href="#">Premium Consulting</a>
-                    <a href="#">Enterprise Solutions</a>
-                    <a href="#">White-Label APIs</a>
-                    <a href="#">Headhunting</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <a href="#">Über uns</a>
-                    <a href="#">Team</a>
-                    <a href="#">Investoren</a>
-                    <a href="#">Karriere</a>
-                    <a href="#">Presse</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Kontakt</h4>
-                    <a href="#">hello@matchside.ch</a>
-                    <a href="#">+41 44 XXX XX XX</a>
-                    <a href="#">Zürich, Schweiz</a>
-                    <a href="#">LinkedIn</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Matchside AG. Alle Rechte vorbehalten. | <a href="#" style="color: #3182ce;">Datenschutz</a> | <a href="#" style="color: #3182ce;">Impressum</a></p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+                <h2>Unsere Zielgruppen</h2>
+                <p>Spezialisierte Lösungen für anspruchsvolle Karrieren und erst
